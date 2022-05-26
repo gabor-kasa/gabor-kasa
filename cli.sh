@@ -7,6 +7,8 @@ own_list () {
 }
 
 ownrepo () {
+  pushd "$WORKSPACE" >/dev/null
+
   own_list | while read REPO ;
   do
     echo "========================================"
@@ -18,6 +20,8 @@ ownrepo () {
 
     cd ..
   done
+
+  popd >/dev/null
 }
 
 own_pull () {
