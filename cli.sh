@@ -2,7 +2,7 @@
 
 own_list () {
   pushd "$WORKSPACE" >/dev/null
-  multi @kasadev/iot 2>/dev/null | grep -B 3 kasadev/iot | grep -v "====" | grep -v "^--" | grep -v .github/CODEOWNERS
+  multi @kasadev/iot 2>/dev/null | grep -v cli.sh | grep -B 3 kasadev/iot | grep -v "====" | grep -v "^--" | grep -v .github/CODEOWNERS
   popd >/dev/null
 }
 
