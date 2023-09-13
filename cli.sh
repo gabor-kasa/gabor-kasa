@@ -26,13 +26,15 @@ ownrepo () {
   own_list | while read REPO ;
   do
     echo "========================================"
-    echo Checking $REPO
+    echo -e "‣ \033[32m$REPO\e[0m"
 
     cd $REPO
 
     bash -c $@
 
     cd ..
+
+    echo -e ""
   done
 
   popd >/dev/null
@@ -44,7 +46,7 @@ own_pull () {
   own_list | while read REPO ;
   do
     echo "========================================"
-    echo Checking $REPO
+    echo -e "Checking \033[32m$REPO\e[0m"
 
     cd $REPO
     BRANCH=$(git rev-parse --abbrev-ref HEAD)
@@ -67,7 +69,7 @@ own_pull () {
     cd ..
 
     echo "========================================"
-    echo -e "\n\n"
+    echo -e "\n\n\n"
   done
 
   popd >/dev/null
