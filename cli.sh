@@ -2,18 +2,20 @@
 
 own_list () {
   pushd "$WORKSPACE" >/dev/null
-  REPOS=$(multi @kasadev/iot 2>/dev/null | grep -v cli.sh | grep -B 3 kasadev/iot | grep -v "====" | grep -v "^--" | grep -v .github/CODEOWNERS)
 
-  if [ -z "$OWN_IGNORE" ]; then
-    echo $REPOS
-  else
-    delete=($(echo $OWN_IGNORE | tr ' ' '\n'))
-    for del in ${delete[@]}
-    do
-     REPOS=("${REPOS[@]/$del}")
-    done
-    echo $REPOS | grep "\S"
-  fi
+  ls -1 | while read D; do
+    if [[ -r $D/.github/CODEOWNERS ]]; then
+      pushd $D >/dev/null
+
+      OWNER=$(grep -c "iot\|external\|kontrol\|hospitality" .github/CODEOWNERS)
+
+      if (( $OWNER > 0 )); then
+        echo $D
+      fi
+
+      popd >/dev/null
+    fi
+  done
 
   popd >/dev/null
 }
