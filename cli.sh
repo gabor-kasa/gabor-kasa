@@ -40,6 +40,25 @@ ownrepo () {
   popd >/dev/null
 }
 
+owntest () {
+  pushd "$WORKSPACE" >/dev/null
+
+  own_list | while read REPO ;
+  do
+    cd $REPO
+
+    bash -c $@ > /dev/null
+
+    if [ $? -eq 0 ]; then
+      echo $REPO
+    fi
+
+    cd ..
+  done
+
+  popd >/dev/null
+}
+
 own_pull () {
   pushd "$WORKSPACE" >/dev/null
 
@@ -52,7 +71,7 @@ own_pull () {
     BRANCH=$(git rev-parse --abbrev-ref HEAD)
     echo "⌥ $BRANCH"
 
-    if [[ "$BRANCH" == "master" ]]; then
+    if [[ "$BRANCH" == "master" ]] || [[ "$BRANCH" == "dev" ]]; then
       if [ -z "$(git status --porcelain)" ]; then
         echo "✅ Working directory clean"
       else
