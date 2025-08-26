@@ -47,7 +47,7 @@ owntest () {
   do
     cd $REPO
 
-    bash -c $@ > /dev/null
+    bash -c $@ > /dev/null 2>&1
 
     if [ $? -eq 0 ]; then
       echo $REPO
